@@ -31,6 +31,7 @@ services:
       - NODE_FUNCTION_ALLOW_BUILTIN=fs,path
     volumes:
       - n8n_data:/home/node/.n8n
+      - /mnt/ssd1/inv_memo:/mnt/ssd1/inv_memo
     networks:
       - legacy-net
 
