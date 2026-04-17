@@ -29,6 +29,10 @@ services:
       - N8N_RUNNERS_BROKER_LISTEN_ADDRESS=0.0.0.0
       - N8N_RUNNERS_ENABLED=false
       - NODE_FUNCTION_ALLOW_BUILTIN=fs,path
+      # Added: Increases node/workflow timeout logic across n8n
+      - EXECUTIONS_TIMEOUT=3600
+      - EXECUTIONS_TIMEOUT_MAX=7200
+      - N8N_DEFAULT_RAW_DATA_TIMEOUT=1800000
     volumes:
       - n8n_data:/home/node/.n8n
       - /mnt/ssd1/inv_memo:/mnt/ssd1/inv_memo
@@ -64,6 +68,8 @@ services:
     restart: always
     environment:
       - OLLAMA_NUM_GPU=2
+      # Added: Keep models loaded in memory for much longer to avoid TTFT offloading
+      - OLLAMA_KEEP_ALIVE=24h
     deploy:
       resources:
         reservations:
