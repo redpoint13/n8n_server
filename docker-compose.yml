@@ -60,6 +60,8 @@ services:
     networks:
       - legacy-net
     restart: always
+    environment:
+      - OLLAMA_NUM_GPU=2
     deploy:
       resources:
         reservations:
