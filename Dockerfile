@@ -1,5 +1,5 @@
 # Use the official n8n task runners image which natively connects to n8n
-FROM n8nio/runners
+FROM n8nio/runners:nightly
 
 USER root
 
