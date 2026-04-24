@@ -54,6 +54,13 @@ services:
       - legacy-net
     depends_on:
       - n8n
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, utility]
 
   # The Brain: Runs local LLMs for 100% privacy
   ollama:
