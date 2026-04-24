@@ -5,7 +5,7 @@ USER root
 
 # Install Python, pip, Node.js, and curl
 RUN apt-get update && apt-get install -y curl python3 python3-pip python3-venv \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs
 
 # Install the ultra-fast 'uv' python package installer to replicate the n8nio/runners setup
