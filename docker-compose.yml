@@ -50,19 +50,14 @@ services:
       - N8N_RUNNERS_AUTH_TOKEN=legacy_bridge_secret_2026
       - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
       - N8N_RUNNERS_LAUNCHER=python
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     volumes:
       - n8n_data:/home/node/.n8n
     networks:
       - legacy-net
     depends_on:
       - n8n
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu, utility]
 
   # The Brain: Runs local LLMs for 100% privacy
   ollama:
@@ -80,13 +75,8 @@ services:
       - OLLAMA_NUM_GPU=2
       # Added: Keep models loaded in memory for much longer to avoid TTFT offloading
       - OLLAMA_KEEP_ALIVE=24h
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
   # The Interface: Open WebUI for direct Ollama access
   open-webui:
