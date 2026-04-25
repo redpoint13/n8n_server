@@ -44,6 +44,7 @@ services:
   n8n-python-runner:
     build: .
     container_name: n8n-python-runner
+    runtime: nvidia
     restart: always
     environment:
       - N8N_RUNNERS_AUTH_TOKEN=legacy_bridge_secret_2026
@@ -67,6 +68,7 @@ services:
   ollama:
     image: ollama/ollama
     container_name: ollama
+    runtime: nvidia
     ports:
       - "11434:11434"
     volumes:
