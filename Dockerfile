@@ -1,22 +1,31 @@
-# Use an official NVIDIA base with CUDA support
-FROM nvidia/cuda:12.2.0-base-ubuntu22.04
+# Use NVIDIA CUDA base
+FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
 
 USER root
 
-# Install Python, pip, Node.js, and curl
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y curl python3 python3-pip python3-venv \
+# 1. Install System Dependencies
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    curl python3 python3-pip python3-venv build-essential \
     && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install the ultra-fast 'uv' python package installer to replicate the n8nio/runners setup
+# 2. Create the node user and home directory
+RUN useradd -m -u 1000 node
+WORKDIR /home/node
+
+# 3. Install 'uv' and n8n packages
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.local/bin:${PATH}"
+ENV PATH="/root/.local/bin:/home/node/.local/bin:${PATH}"
 
-# Install the n8n task runner logic
-RUN npm install -g @n8n/task-runner
+RUN npm install -g n8n @n8n/task-runner
 
-# Install your project's python modules
+# 4. Install Python packages (as root to use --system, or as node user)
 RUN uv pip install --system pandas pdfplumber
 
-# Start the python task runner
-CMD ["node", "/usr/lib/node_modules/@n8n/task-runner/dist/start.js"]
+# 5. Switch to node user for security
+USER 1000
+
+# 6. Execute Task Runner
+# Note: Using 'n8n-task-runner' binary is cleaner than the direct path
+CMD ["n8n-task-runner"]

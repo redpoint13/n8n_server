@@ -20,6 +20,7 @@ services:
     restart: always
     ports:
       - "5678:5678"
+      - "5679:5679"
     environment:
       - N8N_HOST=localhost
       - N8N_PORT=5678
