@@ -28,4 +28,4 @@ USER 1000
 
 # 6. Execute Task Runner
 # Note: Using 'n8n-task-runner' binary is cleaner than the direct path
-CMD ["npx", "n8n-task-runner"]
+CMD ["/usr/local/bin/n8n-task-runner"]
