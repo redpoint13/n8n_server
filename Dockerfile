@@ -18,5 +18,5 @@ RUN npm install -g @n8n/task-runner
 # Install your project's python modules
 RUN uv pip install --system pandas pdfplumber
 
-# Start the python task runner
-CMD ["n8n-task-runner"]
+# Start the python task runner using npx to avoid PATH issues
+CMD ["npx", "@n8n/task-runner"]
