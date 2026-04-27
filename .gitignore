@@ -219,3 +219,5 @@ __marimo__/
 n8n_data/
 anythingllm_storage/
 ollama_storage/
+open-webui_storage/
+
