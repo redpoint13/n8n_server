@@ -49,7 +49,7 @@ services:
     runtime: nvidia
     restart: always
     environment:
-      - N8N_RUNNERS_AUTH_TOKEN=legacy_bridge_secret_2026
+      - N8N_RUNNERS_AUTH_TOKEN=793f616761b71085b0a7f139c741b54cfe1f8a326676cc4ac5ad7f1b8ac3157c
       - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
       - N8N_RUNNERS_LAUNCHER=python
       - NVIDIA_VISIBLE_DEVICES=all
